@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Sharp Ninja",
+      "authorEmail": "ninja@thesharp.ninja",
+      "authorUrl": "https://github.com/sharpninja"
+    }
+  }
+}
