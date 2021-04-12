@@ -11,7 +11,7 @@
   "files": [
     "generators"
   ],
-  "main": "generators/index.js",
+  "main": "generators/app/index.js",
   "keywords": [
     "UML",
     "Services",
@@ -36,8 +36,10 @@
     "npm": ">= 4.0.0"
   },
   "dependencies": {
-    "yeoman-generator": "^3.1.1",
     "chalk": "^2.1.0",
+    "handlebars": "^4.7.7",
+    "yeoman-generator": "^3.1.1",
+    "yo": "^3.1.1",
     "yosay": "^2.0.2"
   },
   "jest": {
@@ -76,7 +78,9 @@
   },
   "scripts": {
     "pretest": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "start": "yo .",
+    "hb": "handlebars generators/app/templates/service-package.handlebars -f dist/service-package.tpl.js;"
   },
   "repository": "gatewayprogrammingschool/generator-service-definition-model",
   "license": "MIT"
