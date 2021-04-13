@@ -1,4 +1,66 @@
-# Service Package Model
 @startuml
 title "{{serviceContextName}} - {{serviceContextFramework}}"
+!pragma horizontalLineBetweenDifferentPackageAllowed
+skinparam linetype ortho
+left to right direction
+page 1 x {{services.length}}
+
+{{#each services}}
+together {
+  {{#with this as | service |}}
+
+  class {{this.serviceName}}Service << service >>
+  class {{this.serviceName}}Service {
+      .. Endpoints ..
+    {{#each serviceEndpoints}}
+      +{{this.endpointResponse.responseType}} {{this.endpointName}}({{this.endpointRequest.requestType}}) << endpoint >>
+    {{/each}}
+  }
+
+    {{#each serviceEndpoints}}
+      {{#with this as | endpoint |}}
+  class {{endpoint.endpointName}}RequestMetadata << record >>
+  class {{endpoint.endpointName}}RequestMetadata {
+    .. Key-Value Pairs ..
+        {{#each endpoint.endpointRequest.requestMetadata}}
+      +{{this.name}} : STRING = '{{this.value}}'
+        {{/each}}
+  }
+
+  class {{endpoint.endpointName}}ResponseMetadata << record >>
+  class {{endpoint.endpointName}}ResponseMetadata {
+    .. Key-Value Pairs ..
+        {{#each endpoint.endpointResponse.responseMetadata}}
+      +{{this.name}} : STRING = '{{this.value}}'
+        {{/each}}
+  }
+
+  {{service.serviceName}}Service -r-> {{this.endpointName}}RequestMetadata : Accepts
+  {{service.serviceName}}Service -r-> {{this.endpointRequest.requestType}} : Accepts
+
+  {{service.serviceName}}Service -r-> {{this.endpointName}}ResponseMetadata : Returns
+  {{service.serviceName}}Service -r-> {{this.endpointResponse.responseType}} : Returns
+      {{/with}}
+    {{/each}}
+  {{/with}}
+}
+{{/each}}
+
+together {
+{{#each dto}}
+  {{#with this as | dtObject |}}
+{{stereotype dtObject}}
+{{inherits dtObject}}
+class {{dtObject.name}} {
+  .. properties ..
+    {{#each dtObject.properties}}
+  +{{this.name}} : {{this.type}} = {{this.default}} << property >>
+    {{/each}}
+}
+
+{{#list dtObject}}{{body}}{{/list}}
+
+  {{/with}}
+{{/each}}
+}
 @enduml

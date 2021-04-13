@@ -40,7 +40,8 @@
     "handlebars": "^4.7.7",
     "yeoman-generator": "^3.1.1",
     "yo": "^3.1.1",
-    "yosay": "^2.0.2"
+    "yosay": "^2.0.2",
+    "zlib": "^1.0.5"
   },
   "jest": {
     "testEnvironment": "node"
